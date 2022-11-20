@@ -1,4 +1,5 @@
 class RenderLoop {
+    //#region Constructors
     constructor(onRender: (now: number) => void) {
         this._run = true;
 
@@ -10,7 +11,9 @@ class RenderLoop {
         };
         this._callbackId = requestAnimationFrame(helper);
     }
+    //#endregion
 
+    //#region Public API
     public Run() {
         return this._run;
     }
@@ -23,7 +26,10 @@ class RenderLoop {
     public RegisterKeyEvent(handler: (e: KeyboardEvent) => void): void {
         window.onkeydown = handler;
     }
+    //#endregion
 
+    //#region Members
     private _run: boolean;
     private _callbackId: number;
+    //#endregion
 }
