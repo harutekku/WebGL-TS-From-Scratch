@@ -48,4 +48,44 @@ function Perspective(fov: number, ratio: number, near: number, far: number): Flo
 
     return result;
 }
+
+function LookAt(position: Float3, target: Float3, up: Float3): Float4x4 {
+    
+    // Step 1: Me to center vector
+    const front = target;
+
+    position.Scale(-1);
+    front.Add(position);
+    front.Normalize();
+    position.Scale(-1);
+
+    // Step 2: side vector
+    const side = front.Cross(up);
+    side.Normalize();
+
+    // Step 3: Up vector
+    up = side.Cross(front);
+
+    // Step 4: Transformation matrix
+
+    const result = new Float4x4(1);
+
+    result.Set(0, 0, side.X);
+    result.Set(1, 0, side.Y);
+    result.Set(2, 0, side.Z);
+
+    result.Set(0, 1, up.X);
+    result.Set(1, 1, up.Y);
+    result.Set(2, 1, up.Z);
+
+    result.Set(0, 2, -front.X);
+    result.Set(1, 2, -front.Y);
+    result.Set(2, 2, -front.Z);
+
+    result.Set(0, 3, side.Dot(position));
+    result.Set(1, 3, up.Dot(position));
+    result.Set(2, 3, front.Dot(position));
+
+    return result;
+}
 //#endregion
