@@ -16,9 +16,9 @@ async function GetFile(path: string): Promise<string> {
 }
 
 function InitCanvas(): typeof InitCanvas {
-    canvas.width  = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    webgl2.Canvas.width  = document.body.clientWidth;
+    webgl2.Canvas.height = document.body.clientHeight;
+    webgl2.GL.viewport(0, 0, webgl2.Canvas.width, webgl2.Canvas.height);
 
     return InitCanvas;
 }
@@ -36,15 +36,15 @@ function Perspective(fov: number, ratio: number, near: number, far: number): Flo
     const l = -r;
 
     result.Set(0, 0, (2 * near) / (r - l));
-    result.Set(2, 0, (r + l) / (r - l));
+    result.Set(0, 2, (r + l) / (r - l));
 
     result.Set(1, 1, (2 * near) / (t - b));
-    result.Set(2, 1, (t + b) / (t - b));
+    result.Set(1, 2, (t + b) / (t - b));
 
     result.Set(2, 2, -(far + near) / (far - near));
-    result.Set(3, 2, (-2 * far * near) / (far - near));
+    result.Set(2, 3, (-2 * far * near) / (far - near));
 
-    result.Set(2, 3, -1);
+    result.Set(3, 2, -1);
 
     return result;
 }

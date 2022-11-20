@@ -1,23 +1,23 @@
 class VertexBuffer {
     //#region Constructors
     constructor(data: Float32Array) {
-        this._id = gl.createBuffer()!;
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._id);
-        gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+        this._id = webgl2.GL.createBuffer()!;
+        webgl2.GL.bindBuffer(webgl2.GL.ARRAY_BUFFER, this._id);
+        webgl2.GL.bufferData(webgl2.GL.ARRAY_BUFFER, data, webgl2.GL.STATIC_DRAW);
     }
     //#endregion
 
     //#region Public API
     public Bind(): void {
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._id);
+        webgl2.GL.bindBuffer(webgl2.GL.ARRAY_BUFFER, this._id);
     }
 
     public Unbind(): void {
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+        webgl2.GL.bindBuffer(webgl2.GL.ARRAY_BUFFER, null);
     }
 
     public Release(): void {
-        gl.deleteBuffer(this._id);
+        webgl2.GL.deleteBuffer(this._id);
     }
     //#endregion 
 
@@ -38,22 +38,22 @@ class VALayoutElement {
     //#region Public API
     public SizeOf(): number {
         switch (this.Type) {
-        case gl.BOOL:
+        case webgl2.GL.BOOL:
             return 1;
 
-        case gl.BYTE:
-        case gl.UNSIGNED_BYTE:
+        case webgl2.GL.BYTE:
+        case webgl2.GL.UNSIGNED_BYTE:
             return 1;
 
-        case gl.SHORT:
-        case gl.UNSIGNED_SHORT:
+        case webgl2.GL.SHORT:
+        case webgl2.GL.UNSIGNED_SHORT:
             return 2;
 
-        case gl.INT:
-        case gl.UNSIGNED_INT:
+        case webgl2.GL.INT:
+        case webgl2.GL.UNSIGNED_INT:
             return 4;
 
-        case gl.FLOAT:
+        case webgl2.GL.FLOAT:
             return 4;
         default:
             throw new Error("Invalid type");
@@ -99,7 +99,7 @@ class VALayout {
 class VertexArray {
     //#region Constructors
     constructor() {
-        this._id = gl.createVertexArray()!;
+        this._id = webgl2.GL.createVertexArray()!;
     }
     //#endregion
 
@@ -113,8 +113,8 @@ class VertexArray {
         for (let i = 0; i != data.length; ++i) {
             const element = data[i];
 
-            gl.vertexAttribPointer(i, element.Count, element.Type, false, stride, offset);
-            gl.enableVertexAttribArray(i);
+            webgl2.GL.vertexAttribPointer(i, element.Count, element.Type, false, stride, offset);
+            webgl2.GL.enableVertexAttribArray(i);
 
             offset += element.Count * element.SizeOf();
         }
@@ -122,15 +122,15 @@ class VertexArray {
     }
 
     public Bind(): void {
-        gl.bindVertexArray(this._id);
+        webgl2.GL.bindVertexArray(this._id);
     }
 
     public Unbind(): void {
-        gl.bindVertexArray(null);
+        webgl2.GL.bindVertexArray(null);
     }
 
     public Release(): void {
-        gl.deleteVertexArray(this._id);
+        webgl2.GL.deleteVertexArray(this._id);
     }
     //#endregion
 
