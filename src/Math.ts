@@ -118,7 +118,7 @@ class Float4x4 {
         return this._data;
     }
 
-    public ToPrettyString(): string {
+    public toString(): string {
         let maxLen = 0;
         const precision = 10;
         this._data.forEach((e, i, a) => {
@@ -195,7 +195,7 @@ class Float3 {
         );
     }
 
-    public ToString(): string {
+    public toString(): string {
         return `[${this.X}, ${this.Y}, ${this.Z}]`;
     }
     //#endregion
